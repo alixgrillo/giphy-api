@@ -1,36 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <!-- Bootstrap CSS CDN  -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" />
+    <!-- Bootstrap CSS CDN  -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Get GIFs of Your Favorit Animals</title>
 </head>
+
 <body>
 
     <div class="container">
-        <div class="row">
-            <div class="col-lg-12" id="buttonsDiv"></div>
-        </div>
-        <div class="row">
-            <div class="col-lg-9" id="gifDiv"></div>
-            <div class="col-lg-3" id="addButton">
+
+        <div class="jumbotron">
+            <h1 class="display-4">Animal GIFs</h1>
+            <p class="lead">Use the following buttons to view gifs - or add another button to see !</p>
+            <hr class="my-4">
+            <div class="row">
+                <div class="col-lg-9" id="buttonsDiv"></div>
+                <div class="col-lg-3" id="addButton">
                     <form id="animal-form">
-                            <label for="animal-input">Add another animal!</label>
-                            <input type="text" id="animal-input"><br>
-                      
-                            <!-- Button triggers new animal to be added -->
-                            <input id="add-animal" type="submit" value="Add another animal!">
-                          </form>
+                        <label for="animal-input">Add another search term!</label>
+                        <input type="text" class="form-control" id="animal-input"><br>
+                        <!-- Button triggers new animal to be added -->
+                        <input id="add-animal" type="submit" class="btn btn-dark" value="Add...">
+                    </form>
+                </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-lg-12" id="gifDiv"></div>
+        </div>
     </div>
-    
+
     <!-- jQuery JS -->
     <script src="https://code.jquery.com/jquery.js"></script>
     <!-- Code to the JavaScript File -->
     <script src="assets/javascript/giphy.js"></script>
 </body>
+
 </html>
