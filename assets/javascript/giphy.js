@@ -1,5 +1,5 @@
 // initial list of buttons to display on page
-var animals = ["dog", "cat", "bird"];
+var animals = ["dog", "cat", "bird", "octopus", "donkey", "moose", "rabbit", "hummingbird"];
 
 // Function for displaying animal buttons
 function createButtons() {
@@ -36,10 +36,14 @@ $("#add-animal").on("click", function(event) {
     // This line will grab the text from the input box
     var animal = $("#animal-input").val().trim();
     // The movie from the textbox is then added to our array
-    animals.push(animal);
+    if(animal===""){
+        alert("Please enter a search term to add a button.");
+    } else{
+        animals.push(animal);
 
-    // calling renderButtons which handles the processing of our movie array
-    createButtons();
+        // calling renderButtons which handles the processing of our movie array
+        createButtons();
+    }
 });
 
 $(document).on("click", ".animal-button", populateGifs)
@@ -60,6 +64,8 @@ function populateGifs(){
         var results = response.data;
         $.each(results, function(i, gif){
             var imgDiv = $("<div>");
+            imgDiv.addClass("gif-div");
+            imgDiv.css("width", results[i].images.fixed_height.width);
             imgDiv.append("<p>Rating: " + results[i].rating);
             var img = $("<img>");
             img.attr("src", results[i].images.fixed_height_still.url);
@@ -68,7 +74,7 @@ function populateGifs(){
             img.attr("img-animate", results[i].images.fixed_height.url);
             img.attr("state", "still");
             img.addClass("gif-img");
-            imgDiv.append(img);
+            imgDiv.prepend(img);
             $("#gifDiv").append(imgDiv);  
         })
     })

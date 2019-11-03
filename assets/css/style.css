@@ -1,0 +1,21 @@
+.gif-div{
+    margin: 20px;
+    float: left;
+}
+.jumbotron{
+    background-color: #50BFB8;
+}
+body{
+    background-image: url(../images/animal-pattern2.jpg);
+}
+#gifDiv{
+    background-color: white;
+}
+.container{
+    margin-bottom: 5%;
+}
+.btn{
+    background-color: #0A5282;
+    border-color: #0A5282;
+
+}
