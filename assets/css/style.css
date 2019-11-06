@@ -5,6 +5,7 @@
 }
 .jumbotron{
     background-color: #50BFB8;
+    font-family: 'McLaren', cursive;
 }
 body{
     background-image: url(../images/animal-pattern2.jpg);

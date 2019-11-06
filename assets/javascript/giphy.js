@@ -77,54 +77,89 @@ function populateGifs(){
         // due to the background-color; it was showing a thin white line
         $("#gifDiv").css("visibility", "visible");
 
+        // declare variable for the API url
         var queryURL = "https://api.giphy.com/v1/gifs/search?";
 
+        // declare variable for api key
         var apiKey = "api_key=vo4Gg8GsJD8WqzEg7o18BpxDgzmio0V5";
 
+        // declare variable that will hold the animal of the button pushed
         var animal = $(this).attr("animal");
 
+        // start the ajax call to the api - requires a url and method (GET)
         $.ajax({
             url: queryURL + apiKey + "&&limit=10&&q=" + animal,
             method: "GET"
+        // waits until the api returns to run the function
         }).then(function(response){
+            // declare a variable to hold the response data
             var results = response.data;
+            // for each returned GIF (should be 10), run the following steps
             $.each(results, function(i, gif){
+                // declare variable for an img div
                 var imgDiv = $("<div>");
+                // add class
                 imgDiv.addClass("gif-div");
+                // set the width of the div to the same width of the image returned
                 imgDiv.css("width", results[i].images.fixed_height.width);
+                // append the value of the rating
                 imgDiv.append("<p>Rating: " + results[i].rating);
+                // declare variable for image element
                 var img = $("<img>");
+                // add an attr of src, which will be the image displayed to the still version
                 img.attr("src", results[i].images.fixed_height_still.url);
+                // add an alt attribute with the title of the gif 
                 img.attr("alt", results[i].title);
+
+                // the following attributes will allow the image to toggle between the 
+                // still and animated urls
+
+                // add an attribute holding the url of the still image
                 img.attr("img-still", results[i].images.fixed_height_still.url);
+                // add an attribute holding the url of the animated image
                 img.attr("img-animate", results[i].images.fixed_height.url);
+                // add an attribute of state that ties the state to still or animated
                 img.attr("state", "still");
+                // add a class to the image
                 img.addClass("gif-img");
+                // prepend the image to the imgdiv
                 imgDiv.prepend(img);
+                // append the image div to the gif dif
                 $("#gifDiv").append(imgDiv);  
             })
         })
     }
 }
 
+// run animate gifs when any gif-img is clicked
 $(document).on("click", ".gif-img", animateGifs)
 
 function animateGifs(){
+    // declare variable that returns the state of the clicked image
     var state = $(this).attr("state");
+    // if the state is still, change the src to the animated url and the state of the image to animate
     if(state==="still"){
         $(this).attr("src",$(this).attr("img-animate"));
         $(this).attr("state","animate");
+    // else (if state is animate), change the src to the still url and the state of the image to still
     } else {
         $(this).attr("src",$(this).attr("img-still"));
         $(this).attr("state","still");
     }
 }
 
+// if the close button is clicked, run this function
 $(document).on("click", ".close", function(){
+    // return the parent element - this is the animal button
     var par = $(event.target).parent();
+    // disable the parent button - this keeps the gifs from displaying when user is trying to 
+    // remove the button
     par.attr("disabled", true);
+    // declare a variable of the animal of the clicked button
     var rem = $(this).attr("animal");
+    // remove the element from the animals array
     animals.splice(animals.indexOf(rem),1);
+    // render the buttons again - the removed button will not be there anymore
     createButtons();
 })
 
