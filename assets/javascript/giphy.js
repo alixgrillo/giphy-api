@@ -20,11 +20,26 @@ function createButtons() {
         a.attr("animal", animals[i]);
         // Providing the button's text with a value of the movie at index i
         a.text(animals[i]);
+        // setup an attr of disabled to false (meaning it is in enabled) 
+        a.attr("disabled", false);
+
+        // create a button that will hold the x to remove the word
+        var x = $("<button>");
+        // add a class to pull in the bootstrap close
+        x.addClass("close");
+        // add an x to the element as text
+        x.append("&times;");
+        // give the x an attribute with animal - this will delete the proper button when clicked
+        x.attr("animal", animals[i]);
+        // append the x button to the animal button
+        a.append(x);
+
         // Adding the button to the HTML
         $("#buttonsDiv").append(a);
     }
 }
 
+// create buttons upon loading the page
 createButtons();
 
 // This function handles events where one button is clicked
@@ -37,47 +52,59 @@ $("#add-animal").on("click", function(event) {
     var animal = $("#animal-input").val().trim();
     // The movie from the textbox is then added to our array
     if(animal===""){
+        // alerts the user that there is not text to add a button
         alert("Please enter a search term to add a button.");
     } else{
+        // add animal to the array
         animals.push(animal);
 
-        // calling renderButtons which handles the processing of our movie array
+        // calling renderButtons which handles the processing of our animals array
         createButtons();
     }
+    // clear the value of the input field
+    $("#animal-input").val("");
 });
 
+// on the click of any animal button, run populate gifs
 $(document).on("click", ".animal-button", populateGifs)
 
 function populateGifs(){
-    $("#gifDiv").empty();
+    // only run this function if the button is enabled (not disabled)
+    if(!$(this).attr("disabled")){
+        // clears the gif div
+        $("#gifDiv").empty();
+        // makes the gif div visible (if hidden) - it will be hidden on the page load
+        // due to the background-color; it was showing a thin white line
+        $("#gifDiv").css("visibility", "visible");
 
-    var queryURL = "https://api.giphy.com/v1/gifs/search?";
+        var queryURL = "https://api.giphy.com/v1/gifs/search?";
 
-    var apiKey = "api_key=vo4Gg8GsJD8WqzEg7o18BpxDgzmio0V5";
+        var apiKey = "api_key=vo4Gg8GsJD8WqzEg7o18BpxDgzmio0V5";
 
-    var animal = $(this).attr("animal");
+        var animal = $(this).attr("animal");
 
-    $.ajax({
-        url: queryURL + apiKey + "&&limit=10&&q=" + animal,
-        method: "GET"
-    }).then(function(response){
-        var results = response.data;
-        $.each(results, function(i, gif){
-            var imgDiv = $("<div>");
-            imgDiv.addClass("gif-div");
-            imgDiv.css("width", results[i].images.fixed_height.width);
-            imgDiv.append("<p>Rating: " + results[i].rating);
-            var img = $("<img>");
-            img.attr("src", results[i].images.fixed_height_still.url);
-            img.attr("alt", results[i].title);
-            img.attr("img-still", results[i].images.fixed_height_still.url);
-            img.attr("img-animate", results[i].images.fixed_height.url);
-            img.attr("state", "still");
-            img.addClass("gif-img");
-            imgDiv.prepend(img);
-            $("#gifDiv").append(imgDiv);  
+        $.ajax({
+            url: queryURL + apiKey + "&&limit=10&&q=" + animal,
+            method: "GET"
+        }).then(function(response){
+            var results = response.data;
+            $.each(results, function(i, gif){
+                var imgDiv = $("<div>");
+                imgDiv.addClass("gif-div");
+                imgDiv.css("width", results[i].images.fixed_height.width);
+                imgDiv.append("<p>Rating: " + results[i].rating);
+                var img = $("<img>");
+                img.attr("src", results[i].images.fixed_height_still.url);
+                img.attr("alt", results[i].title);
+                img.attr("img-still", results[i].images.fixed_height_still.url);
+                img.attr("img-animate", results[i].images.fixed_height.url);
+                img.attr("state", "still");
+                img.addClass("gif-img");
+                imgDiv.prepend(img);
+                $("#gifDiv").append(imgDiv);  
+            })
         })
-    })
+    }
 }
 
 $(document).on("click", ".gif-img", animateGifs)
@@ -92,4 +119,12 @@ function animateGifs(){
         $(this).attr("state","still");
     }
 }
+
+$(document).on("click", ".close", function(){
+    var par = $(event.target).parent();
+    par.attr("disabled", true);
+    var rem = $(this).attr("animal");
+    animals.splice(animals.indexOf(rem),1);
+    createButtons();
+})
 
