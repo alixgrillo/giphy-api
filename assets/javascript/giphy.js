@@ -30,7 +30,7 @@ function createButtons() {
         // add an x to the element as text
         x.append("&times;");
         // give the x an attribute with animal - this will delete the proper button when clicked
-        x.attr("animal", animals[i]);
+        x.attr("animal-type", animals[i]);
         // append the x button to the animal button
         a.append(x);
 
@@ -50,14 +50,26 @@ $("#add-animal").on("click", function(event) {
 
     // This line will grab the text from the input box
     var animal = $("#animal-input").val().trim();
-    // The movie from the textbox is then added to our array
+    
+    var exists = false;
+    // The animal from the textbox is then added to our array
     if(animal===""){
         // alerts the user that there is not text to add a button
         alert("Please enter a search term to add a button.");
-    } else{
-        // add animal to the array
-        animals.push(animal);
-
+    } else {
+        //loop through each animal in array to see if that word exists already
+        $.each(animals, function(i, animalItem){
+            // if it exists, then alert the user to use a new word
+            if(animalItem === animal){
+                exists = true;
+                alert("You have already added " + animal + ". Please pick another word");
+            } 
+        })
+        if(!exists){
+               // add animal to the array
+            animals.push(animal);
+        }
+     
         // calling renderButtons which handles the processing of our animals array
         createButtons();
     }
@@ -67,6 +79,11 @@ $("#add-animal").on("click", function(event) {
 
 // on the click of any animal button, run populate gifs
 $(document).on("click", ".animal-button", populateGifs)
+
+// this will be the number of times 1 animal is clicked
+var loop = 1;
+// hold the last animal - if they are the same, then more gifs will produce
+var lastAnimal = "";
 
 function populateGifs(){
     // only run this function if the button is enabled (not disabled)
@@ -86,9 +103,22 @@ function populateGifs(){
         // declare variable that will hold the animal of the button pushed
         var animal = $(this).attr("animal");
 
+        // if the animal is chosen multiple times in a row, it will call 10 more gifs each time,
+        // otherwise, it resets the loop to 1
+        if(animal === lastAnimal){
+            loop++;   
+        } else {
+            loop = 1;
+        }
+        // set the last animal to the current one so that it knows if the next animal is the same
+        lastAnimal = animal;
+        
+        // declare a variable that determines how many gifs will be called
+        var limit = loop * 10;
+        
         // start the ajax call to the api - requires a url and method (GET)
         $.ajax({
-            url: queryURL + apiKey + "&&limit=10&&q=" + animal,
+            url: queryURL + apiKey + "&&limit="+ limit + "&&q=" + animal,
             method: "GET"
         // waits until the api returns to run the function
         }).then(function(response){
@@ -124,10 +154,12 @@ function populateGifs(){
                 img.addClass("gif-img");
                 // prepend the image to the imgdiv
                 imgDiv.prepend(img);
-                // append the image div to the gif dif
-                $("#gifDiv").append(imgDiv);  
+                // append the image div to the gif dif - I have decided to use the prepend
+                // on this so that when new gifs are added, they go to the top of the page
+                $("#gifDiv").prepend(imgDiv);  
             })
         })
+        
     }
 }
 
@@ -156,7 +188,7 @@ $(document).on("click", ".close", function(){
     // remove the button
     par.attr("disabled", true);
     // declare a variable of the animal of the clicked button
-    var rem = $(this).attr("animal");
+    var rem = $(this).attr("animal-type");
     // remove the element from the animals array
     animals.splice(animals.indexOf(rem),1);
     // render the buttons again - the removed button will not be there anymore

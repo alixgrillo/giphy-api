@@ -17,7 +17,8 @@ to add as many as you want. You can even delete animal search term!
 ## About
 The animal GIF page allows the user to see 10 randoms GIFs (hard-G) of their favorite animals. The search
 is based on the text on the buttons. When the page loads, there will be 8 buttons to start, and the user can 
-click any of the button to render the GIFs.
+click any of the button to render the GIFs. Note - if you want to see more GIFs, hit the same animal more
+than once! Each time you chose an animal, 10 more GIFs will produce than the last time.
 
 <img src="/assets/images/giphy-game.gif">
 
