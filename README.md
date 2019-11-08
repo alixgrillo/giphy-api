@@ -11,7 +11,7 @@ to add as many as you want. You can even delete animal search term!
 * [Requirements](#requirements)
 * [Build Tools](#build-tools)
 * [Acknowledgements](#acknowledgements)
-* [License](#license)
+<!-- * [License](#license) -->
 
 
 ## About
