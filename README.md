@@ -4,14 +4,16 @@ Links to Giphy API to display gifs that can be animated or still
 Return randoms GIFs of your favorite animals. A few animals have been started for you, but feel free
 to add as many as you want. You can even delete animal search term!
 
+Please access the site at https://alixgrillo.github.io/giphy-api/.
+
 
 ## Table of Contents
 * [About](#about)
 * [Functionality](#functionality)
+* [Technical Features](#technical-features)
 * [Requirements](#requirements)
 * [Build Tools](#build-tools)
 * [Acknowledgements](#acknowledgements)
-<!-- * [License](#license) -->
 
 
 ## About
@@ -40,20 +42,24 @@ activate the GIFs when the close button is clicked.
 
 <img src="/assets/images/giphy-deleteWord.gif">
 
+## Technical Features
+* Buttons are dynamically created using an array of items and generating the button through JQuery.
+* JQuery `$.ajax` function is used to call the GIPHY API to generate the specified number of GIFs.
+* HTML element `data` attribute utilized to store animated and still URLs for GIF to allow GIF to switch based
+on a click.
+* Leveraged `.slice()` function to allow the user to delete a button.
 
 ## Requirements
 There are no requirements for this game.
 
 ## Build Tools
+## Build Tools
 * HTML/CSS
+* Bootstrap 4.0.0
 * JQuery
-* GIPHY API (https://developers.giphy.com/)
+* Google Font
+* GIPHY API (https://urldefense.proofpoint.com/v2/url?u=https-3A__developers.giphy.com_&d=DwIGAg&c=A6XMocl_FPns4glHZfOYqg&r=IRMXGH4uQldJ6MER3Ik-FZ8G3lmdgs7WaioefvbR--g&m=gqxps4wuwEkMg-Pm21ced-_3RjZ4oBdHiS5gYAGRKf8&s=-JgYf8cIoatlBRmWdMu2_vB16uYkCF16hJ1wGUGe1sA&e= )
 
 ## Acknowledgements
 * Thanks to Google fonts for all the variations of fonts available.
 * Thanks to GIPHY API for making excellent GIFs available with a well documented API!
-
-## License
-This project was created by [Alix Grillo](https://github.com/alixgrillo).    
-
-
