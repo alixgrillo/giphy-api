@@ -58,7 +58,7 @@ There are no requirements for this game.
 * Bootstrap 4.0.0
 * JQuery
 * Google Font
-* GIPHY API (https://urldefense.proofpoint.com/v2/url?u=https-3A__developers.giphy.com_&d=DwIGAg&c=A6XMocl_FPns4glHZfOYqg&r=IRMXGH4uQldJ6MER3Ik-FZ8G3lmdgs7WaioefvbR--g&m=gqxps4wuwEkMg-Pm21ced-_3RjZ4oBdHiS5gYAGRKf8&s=-JgYf8cIoatlBRmWdMu2_vB16uYkCF16hJ1wGUGe1sA&e= )
+* GIPHY API (https://developers.giphy.com/)
 
 ## Acknowledgements
 * Thanks to Google fonts for all the variations of fonts available.
