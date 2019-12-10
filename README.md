@@ -53,7 +53,6 @@ on a click.
 There are no requirements for this game.
 
 ## Build Tools
-## Build Tools
 * HTML/CSS
 * Bootstrap 4.0.0
 * JQuery
